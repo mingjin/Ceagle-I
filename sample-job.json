@@ -1,0 +1,174 @@
+{
+  "actions" : [
+    {
+      "causes" : [
+        {
+          "shortDescription" : "Started by timer"
+        }
+      ]
+    },
+    {
+      "buildsByBranchName" : {
+        "origin/master" : {
+          "buildNumber" : 2,
+          "buildResult" : null,
+          "revision" : {
+            "SHA1" : "195e53d1fddbeb021e7bc74b3e2db0878ff67ddf",
+            "branch" : [
+              {
+                "SHA1" : "195e53d1fddbeb021e7bc74b3e2db0878ff67ddf",
+                "name" : "origin/master"
+              }
+            ]
+          }
+        },
+        "origin/jruby-1_7" : {
+          "buildNumber" : 107,
+          "buildResult" : null,
+          "revision" : {
+            "SHA1" : "e3b1080b86093065e4efee1c8ed28983c73afbf5",
+            "branch" : [
+              {
+                "SHA1" : "e3b1080b86093065e4efee1c8ed28983c73afbf5",
+                "name" : "origin/jruby-1_7"
+              }
+            ]
+          }
+        }
+      },
+      "lastBuiltRevision" : {
+        "SHA1" : "e3b1080b86093065e4efee1c8ed28983c73afbf5",
+        "branch" : [
+          {
+            "SHA1" : "e3b1080b86093065e4efee1c8ed28983c73afbf5",
+            "name" : "origin/jruby-1_7"
+          }
+        ]
+      },
+      "remoteUrls" : [
+        "git://jruby.org/jruby.git"
+      ],
+      "scmName" : ""
+    },
+    {
+      
+    },
+    {
+      
+    }
+  ],
+  "artifacts" : [
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-complete-1.7.5.jar",
+      "relativePath" : "artifacts/jruby-complete-1.7.5.jar"
+    },
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-complete-1.7.5.jar.md5",
+      "relativePath" : "artifacts/jruby-complete-1.7.5.jar.md5"
+    },
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-complete-1.7.5.jar.sha1",
+      "relativePath" : "artifacts/jruby-complete-1.7.5.jar.sha1"
+    },
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-dist-1.7.5-bin.tar.gz",
+      "relativePath" : "artifacts/jruby-dist-1.7.5-bin.tar.gz"
+    },
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-dist-1.7.5-bin.tar.gz.md5",
+      "relativePath" : "artifacts/jruby-dist-1.7.5-bin.tar.gz.md5"
+    },
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-dist-1.7.5-bin.tar.gz.sha1",
+      "relativePath" : "artifacts/jruby-dist-1.7.5-bin.tar.gz.sha1"
+    },
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-dist-1.7.5-bin.zip",
+      "relativePath" : "artifacts/jruby-dist-1.7.5-bin.zip"
+    },
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-dist-1.7.5-bin.zip.md5",
+      "relativePath" : "artifacts/jruby-dist-1.7.5-bin.zip.md5"
+    },
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-dist-1.7.5-bin.zip.sha1",
+      "relativePath" : "artifacts/jruby-dist-1.7.5-bin.zip.sha1"
+    },
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-dist-1.7.5-src.tar.gz",
+      "relativePath" : "artifacts/jruby-dist-1.7.5-src.tar.gz"
+    },
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-dist-1.7.5-src.tar.gz.md5",
+      "relativePath" : "artifacts/jruby-dist-1.7.5-src.tar.gz.md5"
+    },
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-dist-1.7.5-src.tar.gz.sha1",
+      "relativePath" : "artifacts/jruby-dist-1.7.5-src.tar.gz.sha1"
+    },
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-dist-1.7.5-src.zip",
+      "relativePath" : "artifacts/jruby-dist-1.7.5-src.zip"
+    },
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-dist-1.7.5-src.zip.md5",
+      "relativePath" : "artifacts/jruby-dist-1.7.5-src.zip.md5"
+    },
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-dist-1.7.5-src.zip.sha1",
+      "relativePath" : "artifacts/jruby-dist-1.7.5-src.zip.sha1"
+    },
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-jars-1.7.5.gem",
+      "relativePath" : "artifacts/jruby-jars-1.7.5.gem"
+    },
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-jars-1.7.5.gem.md5",
+      "relativePath" : "artifacts/jruby-jars-1.7.5.gem.md5"
+    },
+    {
+      "displayPath" : null,
+      "fileName" : "jruby-jars-1.7.5.gem.sha1",
+      "relativePath" : "artifacts/jruby-jars-1.7.5.gem.sha1"
+    }
+  ],
+  "building" : false,
+  "description" : null,
+  "duration" : 387327,
+  "estimatedDuration" : 364539,
+  "executor" : null,
+  "fullDisplayName" : "jruby-dist-1_7 #107",
+  "id" : "2013-10-31_23-59-31",
+  "keepLog" : false,
+  "number" : 107,
+  "result" : "SUCCESS",
+  "timestamp" : 1383289171839,
+  "url" : "http://ci.jruby.org/job/jruby-dist-1_7/107/",
+  "builtOn" : "",
+  "changeSet" : {
+    "items" : [
+      
+    ],
+    "kind" : "git"
+  },
+  "culprits" : [
+    
+  ]
+}
