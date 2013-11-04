@@ -1,8 +1,7 @@
 (function($) {
-    $.textMetrics = function(text, font) {
-        var f = font || '50px arial',
-            o = $('<div>' + text + '</div>')
-                  .css({'position': 'absolute', 'float': 'left', 'white-space': 'nowrap', 'visibility': 'hidden', 'font': f})
+    $.textWidth = function(text, font) {
+        var o = $('<div>' + text + '</div>')
+                  .css({'position': 'absolute', 'float': 'left', 'white-space': 'nowrap', 'visibility': 'hidden'})
                   .appendTo($('body')),
             w = o.width();
 

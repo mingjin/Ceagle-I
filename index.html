@@ -5,23 +5,21 @@
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
-    <div id="container">
-      <div class="box size00"></div>
+    <div id="container" class="packery js-packery" data-packery-options='{"itemSelector": ".item", "gutter": 10}'>
+      <div class="gutter-sizer"></div>
     </div>
     <script src="js/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/jquery-ext.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/jquery.nested.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/packery.pkgd.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
     $(function(){
-      $("#container").nested({minWidth: 50});
       if (typeof(Worker) === 'undefined') {
-        throw 'Sorry, No Worker Support for your browser. Please use the latest version of Chrome or Firefox or Safari'
+        throw 'Sorry, No Worker Support for Your Browser. Please Use the Latest Version of Chrome or Firefox or Safari'
       }
       
       monitor = new Worker('js/ci.monitor.js');
       
       monitor.onmessage = function(event) {
-        var boxes = []
         $.each(event.data, function(index, value) {
           $.getJSON(value.url+'/lastBuild/api/json', function(data2) {
             if ($('div[data-jobname="'+value.name+'"]').length) {
@@ -32,13 +30,15 @@
               }
             } else {
               var box = document.createElement('div');
-              box.className = 'box size' + Math.floor(($.textMetrics(value.name)+50.0)/40) + '1 '+data2.result.toLowerCase();
+              box.className = 'item has-padding '+data2.result.toLowerCase();
               box.dataset.jobname = value.name;
               box.innerText = value.name
-              boxes.push( box );
-              $('#container').append(boxes).nested('append', boxes);
+              box.style.width = parseInt($.textWidth(value.name))+40+'px'
+              
+              $('#container').append(box);
             }
           });
+          
         });
       };
       
