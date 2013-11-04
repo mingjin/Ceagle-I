@@ -6,11 +6,10 @@
   </head>
   <body>
     <div id="container">
-      <div class="box size12" data-jobid="1"></div>
-      <div class="box size11" data-jobid="2"></div>
-      <div class="box size12" data-jobid="3"></div>
-      <div class="box size61" data-jobid="2"></div>
-      <div class="box size22" data-jobid="1"></div>
+      <div class="box size11"></div>
+      <div class="box size12"></div>
+      <div class="box size21"></div>
+      <div class="box size22"></div>
     </div>
     <script src="js/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/jquery.nested.js" type="text/javascript" charset="utf-8"></script>
@@ -24,13 +23,33 @@
       monitor = new Worker('js/ci.monitor.js');
       
       monitor.onmessage = function(event) {
+        var boxes = []
         $.each(event.data, function(index, value) {
-          $('div[data-jobid="'+value.id+'"]').removeClass('success failed').addClass(value.state);
+          $.getJSON(value.url+'/lastBuild/api/json', function(data2) {
+            alert(value.name)
+            if ($('div[data-jobname="'+value.name+'"]').length) {
+              alert(5)
+              if (data2.building == 'true') {
+              } else{
+                alert(6)
+                $('div[data-jobname="'+value.name+'"]').removeClass('success failed').addClass(data2.result.toLowerCase());
+              }
+            } else {
+              alert(1)
+              var box = $('<div class="box size41 '+data2.result.toLowerCase()+'" data-jobname="'+value.name+'"></div>')[0]
+              boxes.push( box );
+            }
+          })
         });
+        $('#container').append(boxes).nested('append', boxes);
       };
       
-      $.getJSON('sample-job.json', function(data) {
-        monitor.postMessage(data);
+      $.getJSON('http://ci.jruby.org/api/json', function(data) {
+        var activeJobs = $.grep(data.jobs, function(value){
+          return value.color !== 'disabled'
+        });
+        alert(2)
+        monitor.postMessage(activeJobs);
       });
     });
     </script>
