@@ -2,12 +2,15 @@ body {
   background-color:#e1e1e1;
   color:#fff;
   font-family: Arial, sans-serif;
-  font-size:11px;
-  line-height: 14px;
+  font-size:50px;
+  line-height: 50px;
   padding:0px;
   margin:0px;	
 }
 
+div {
+  text-align: center;
+}
 
 .box {
   background-color:#ff4499;
@@ -53,4 +56,12 @@ a.btn {
 
 .failed {
   background-color: red;
+}
+
+.aborted {
+  background-color: gray;
+}
+
+.building {
+  background-color: yellow;
 }

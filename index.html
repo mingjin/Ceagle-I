@@ -6,16 +6,14 @@
   </head>
   <body>
     <div id="container">
-      <div class="box size11"></div>
-      <div class="box size12"></div>
-      <div class="box size21"></div>
-      <div class="box size22"></div>
+      <div class="box size00"></div>
     </div>
     <script src="js/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery-ext.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/jquery.nested.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
     $(function(){
-      $("#container").nested();
+      $("#container").nested({minWidth: 50});
       if (typeof(Worker) === 'undefined') {
         throw 'Sorry, No Worker Support for your browser. Please use the latest version of Chrome or Firefox or Safari'
       }
@@ -26,29 +24,28 @@
         var boxes = []
         $.each(event.data, function(index, value) {
           $.getJSON(value.url+'/lastBuild/api/json', function(data2) {
-            alert(value.name)
             if ($('div[data-jobname="'+value.name+'"]').length) {
-              alert(5)
               if (data2.building == 'true') {
-              } else{
-                alert(6)
+                $('div[data-jobname="'+value.name+'"]').removeClass('success failed').addClass('building');
+              } else {
                 $('div[data-jobname="'+value.name+'"]').removeClass('success failed').addClass(data2.result.toLowerCase());
               }
             } else {
-              alert(1)
-              var box = $('<div class="box size41 '+data2.result.toLowerCase()+'" data-jobname="'+value.name+'"></div>')[0]
+              var box = document.createElement('div');
+              box.className = 'box size' + Math.floor(($.textMetrics(value.name)+50.0)/40) + '1 '+data2.result.toLowerCase();
+              box.dataset.jobname = value.name;
+              box.innerText = value.name
               boxes.push( box );
+              $('#container').append(boxes).nested('append', boxes);
             }
-          })
+          });
         });
-        $('#container').append(boxes).nested('append', boxes);
       };
       
-      $.getJSON('http://ci.jruby.org/api/json', function(data) {
+      $.getJSON('http://ci.jruby.org/api/json/', function(data) {
         var activeJobs = $.grep(data.jobs, function(value){
           return value.color !== 'disabled'
         });
-        alert(2)
         monitor.postMessage(activeJobs);
       });
     });
