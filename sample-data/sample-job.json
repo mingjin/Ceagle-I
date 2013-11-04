@@ -1,0 +1,95 @@
+{
+  "actions" : [
+    
+  ],
+  "description" : "",
+  "displayName" : "jruby-dist-master",
+  "displayNameOrNull" : null,
+  "name" : "jruby-dist-master",
+  "url" : "http://ci.jruby.org/job/jruby-dist-master/",
+  "buildable" : true,
+  "builds" : [
+    {
+      "number" : 1525,
+      "url" : "http://ci.jruby.org/job/jruby-dist-master/1525/"
+    },
+    {
+      "number" : 1524,
+      "url" : "http://ci.jruby.org/job/jruby-dist-master/1524/"
+    },
+    {
+      "number" : 1523,
+      "url" : "http://ci.jruby.org/job/jruby-dist-master/1523/"
+    },
+    {
+      "number" : 1522,
+      "url" : "http://ci.jruby.org/job/jruby-dist-master/1522/"
+    },
+    {
+      "number" : 1521,
+      "url" : "http://ci.jruby.org/job/jruby-dist-master/1521/"
+    },
+    {
+      "number" : 1497,
+      "url" : "http://ci.jruby.org/job/jruby-dist-master/1497/"
+    }
+  ],
+  "color" : "blue",
+  "firstBuild" : {
+    "number" : 1497,
+    "url" : "http://ci.jruby.org/job/jruby-dist-master/1497/"
+  },
+  "healthReport" : [
+    {
+      "description" : "Build stability: No recent builds failed.",
+      "iconUrl" : "health-80plus.png",
+      "score" : 100
+    }
+  ],
+  "inQueue" : false,
+  "keepDependencies" : false,
+  "lastBuild" : {
+    "number" : 1525,
+    "url" : "http://ci.jruby.org/job/jruby-dist-master/1525/"
+  },
+  "lastCompletedBuild" : {
+    "number" : 1525,
+    "url" : "http://ci.jruby.org/job/jruby-dist-master/1525/"
+  },
+  "lastFailedBuild" : {
+    "number" : 1497,
+    "url" : "http://ci.jruby.org/job/jruby-dist-master/1497/"
+  },
+  "lastStableBuild" : {
+    "number" : 1525,
+    "url" : "http://ci.jruby.org/job/jruby-dist-master/1525/"
+  },
+  "lastSuccessfulBuild" : {
+    "number" : 1525,
+    "url" : "http://ci.jruby.org/job/jruby-dist-master/1525/"
+  },
+  "lastUnstableBuild" : null,
+  "lastUnsuccessfulBuild" : {
+    "number" : 1497,
+    "url" : "http://ci.jruby.org/job/jruby-dist-master/1497/"
+  },
+  "nextBuildNumber" : 1526,
+  "property" : [
+    
+  ],
+  "queueItem" : null,
+  "concurrentBuild" : false,
+  "downstreamProjects" : [
+    {
+      "name" : "jruby-unpack",
+      "url" : "http://ci.jruby.org/job/jruby-unpack/",
+      "color" : "disabled"
+    }
+  ],
+  "scm" : {
+    
+  },
+  "upstreamProjects" : [
+    
+  ]
+}
