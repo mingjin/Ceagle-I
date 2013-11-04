@@ -20,19 +20,14 @@
       monitor.onmessage = function(event) {
         $.each(event.data, function(index, value) {
           $.getJSON(value.url+'/lastBuild/api/json', function(data2) {
-            if ($('div[data-jobname="'+value.name+'"]').length) {
-              if (data2.building == 'true') {
-                $('div[data-jobname="'+value.name+'"]').removeClass('success failed').addClass('building');
-              } else {
-                $('div[data-jobname="'+value.name+'"]').removeClass('success failed').addClass(data2.result.toLowerCase());
-              }
+            jobDiv = $('div[data-jobname="'+value.name+'"]');
+            if (jobDiv.length) {
+              currentState = data2.building == 'true' ? 'building' : data2.result.toLowerCase();
+              jobDiv.removeClass('success failed aborted building').addClass(currentState);
             } else {
-              var box = document.createElement('div');
-              box.className = 'item has-padding '+data2.result.toLowerCase();
-              box.dataset.jobname = value.name;
-              box.innerHTML = value.name
+              var item = $('<div>', {class: 'item has-padding '+data2.result.toLowerCase()}).data('jobname', value.name).text(value.name)
               
-              $('#container').append(box);
+              $('#container').append(item);
             }
           });
           
