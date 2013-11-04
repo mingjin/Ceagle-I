@@ -5,16 +5,14 @@
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
-    <div id="container" class="packery js-packery" data-packery-options='{"itemSelector": ".item", "gutter": 10}'>
-      <div class="gutter-sizer"></div>
+    <div id="container" class="container">
     </div>
     <script src="js/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/jquery-ext.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/packery.pkgd.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
     $(function(){
       if (typeof(Worker) === 'undefined') {
-        throw 'Sorry, No Worker Support for Your Browser. Please Use the Latest Version of Chrome or Firefox or Safari'
+        alert('Sorry, No Worker Support for the Browser. Please Use the Latest Version of Chrome or Firefox or Safari');
+        throw 'Sorry, No Worker Support for the Browser. Please Use the Latest Version of Chrome or Firefox or Safari';
       }
       
       monitor = new Worker('js/ci.monitor.js');
@@ -32,8 +30,7 @@
               var box = document.createElement('div');
               box.className = 'item has-padding '+data2.result.toLowerCase();
               box.dataset.jobname = value.name;
-              box.innerText = value.name
-              box.style.width = parseInt($.textWidth(value.name))+40+'px'
+              box.innerHTML = value.name
               
               $('#container').append(box);
             }
