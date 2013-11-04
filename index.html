@@ -7,40 +7,36 @@
   <body>
     <div id="container" class="container">
     </div>
-    <script src="js/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript" charset="utf-8">
-    $(function(){
-      if (typeof(Worker) === 'undefined') {
-        alert('Sorry, No Worker Support for the Browser. Please Use the Latest Version of Chrome or Firefox or Safari');
-        throw 'Sorry, No Worker Support for the Browser. Please Use the Latest Version of Chrome or Firefox or Safari';
-      }
-      
-      monitor = new Worker('js/ci.monitor.js');
-      
-      monitor.onmessage = function(event) {
-        $.each(event.data, function(index, value) {
-          $.getJSON(value.url+'/lastBuild/api/json', function(data2) {
-            jobDiv = $('div[data-jobname="'+value.name+'"]');
-            if (jobDiv.length) {
-              currentState = data2.building == 'true' ? 'building' : data2.result.toLowerCase();
-              jobDiv.removeClass('success failed aborted building').addClass(currentState);
-            } else {
-              var item = $('<div>', {class: 'item has-padding '+data2.result.toLowerCase()}).data('jobname', value.name).text(value.name)
-              
-              $('#container').append(item);
-            }
-          });
-          
+  </body>
+  <script src="js/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" charset="utf-8">
+  $(function(){
+    // if (typeof(Worker) === 'undefined') {
+    //   alert('Sorry, No Worker Support for the Browser. Please Use the Latest Version of Chrome or Firefox or Safari');
+    //   throw 'Sorry, No Worker Support for the Browser. Please Use the Latest Version of Chrome or Firefox or Safari';
+    // }
+    // 
+    // monitor = new Worker('js/ci.monitor.js');
+    // 
+    // monitor.onmessage = function(event) {
+    // };
+    
+    $.getJSON('http://ci.jruby.org/api/json/', function(data) {
+      var activeJobs = $.grep(data.jobs, function(value){
+        return value.color !== 'disabled'
+      });
+      $.each(activeJobs, function(index, value) {
+        $.getJSON(value.url+'/lastBuild/api/json', function(data2) {
+          var job = $('div[data-jobname="'+value.name+'"]');
+          if (!job.length) {
+            job = $('<div>', {class: 'item has-padding'}).data('jobname', value.name).text(value.name);  
+            $('#container').append(job);
+          }
+          currentState = data2.building == 'true' ? 'building' : data2.result.toLowerCase();
+          job.removeClass('success failed aborted building').addClass(currentState);
         });
-      };
-      
-      $.getJSON('http://ci.jruby.org/api/json/', function(data) {
-        var activeJobs = $.grep(data.jobs, function(value){
-          return value.color !== 'disabled'
-        });
-        monitor.postMessage(activeJobs);
       });
     });
-    </script>
-  </body>
+  });
+  </script>
 </html> 
