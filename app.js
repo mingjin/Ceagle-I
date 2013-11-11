@@ -1,5 +1,7 @@
-var express = require('express'), 
-    cons = require('consolidate');
+var express = require('express'),
+    cons = require('consolidate'),
+    rest = require('./service/rest.js');
+    
 var app = express();
 
 app.configure(function(){
@@ -16,7 +18,16 @@ app.configure(function(){
 });
 
 app.get('/', function(req, res) {
-    res.render('index.html')
+    res.render('index.html');
+});
+
+app.get('/ci', function(req, res) {
+    rest.getJSON({host: 'ci.jruby.org', path:'/api/json'}, function(status, result){
+        var activeJobs = result.jobs.filter(function(job) {
+            return job.color !== 'disabled';
+        });
+        res.send(activeJobs);
+    });
 });
 
 app.listen(3000);
