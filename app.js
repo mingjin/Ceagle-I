@@ -8,6 +8,7 @@ app.configure(function(){
     app.use(express.logger());
     app.use(express.compress());
     app.use(express.static(__dirname + '/public'));
+    app.use(express.favicon(__dirname + '/public/img/favicon.ico', { maxAge: 2592000000 }));
     app.set('views', __dirname + '/views');
     app.set('view engine', 'html');
     app.engine('html', cons.ejs);
@@ -22,9 +23,9 @@ app.get('/', function(req, res) {
 });
 
 app.get('/ci', function(req, res) {
-    rest.getJSON({host: 'ci.jruby.org', path:'/api/json'}, function(status, result){
+    rest.get({host: 'ci.jruby.org', path:'/api/json?tree=jobs[name,buildable,healthReport[score],lastBuild[result]]'}, function(status, result){
         var activeJobs = result.jobs.filter(function(job) {
-            return job.color !== 'disabled';
+            return job.buildable;
         });
         res.send(activeJobs);
     });

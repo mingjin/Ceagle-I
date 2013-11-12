@@ -14,10 +14,7 @@ var https = require("https");
 * @param options: http options object
 * @param callback: callback to pass the results JSON object(s) back
 */
-exports.getJSON = function(options, onResult)
-{
-    console.log("rest::getJSON");
-
+exports.get = function(options, onResult){
     var prot = options.port == 443 ? https : http;
     var req = prot.request(options, function(res)
     {

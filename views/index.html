@@ -29,7 +29,7 @@
             job = $('<div>', {class: 'item has-padding'}).data('jobname', value.name).text(value.name);  
             $('#container').append(job);
           }
-          currentState = 'success' //data2.building == 'true' ? 'building' : data2.result.toLowerCase();
+          currentState = value.lastBuild.result.toLowerCase();
           job.removeClass('success failed aborted building').addClass(currentState);
         });
       // });
