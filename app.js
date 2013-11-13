@@ -22,12 +22,12 @@ app.get('/', function(req, res) {
     res.render('index.html');
 });
 
-app.get('/ci', function(req, res) {
-    rest.get({host: 'ci.jruby.org', path:'/api/json?tree=jobs[name,buildable,healthReport[score],lastBuild[result]]'}, function(status, result){
+app.get('/jenkins/:host', function(req, res) {
+    rest.get({host: req.params.host, path:'/api/json?tree=jobs[name,buildable,healthReport[score],lastBuild[result,url]]'}, function(status, result){
         var activeJobs = result.jobs.filter(function(job) {
             return job.buildable;
         });
-        res.send(activeJobs);
+        res.json(activeJobs);
     });
 });
 

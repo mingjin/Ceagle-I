@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Ceagle-I: CI from Eagle Eye</title>
+    <link rel="stylesheet" href="/css/jquery.growl.css" type="text/css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="/css/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
@@ -11,29 +12,38 @@
   <script src="/js/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
   $(function(){
-    // if (typeof(Worker) === 'undefined') {
-    //   alert('Sorry, No Worker Support for the Browser. Please Use the Latest Version of Chrome or Firefox or Safari');
-    //   throw 'Sorry, No Worker Support for the Browser. Please Use the Latest Version of Chrome or Firefox or Safari';
-    // }
-    // 
-    // monitor = new Worker('js/ci.monitor.js');
-    // 
-    // monitor.onmessage = function(event) {
-    // };
+    if (typeof(Worker) === 'undefined') {
+      alert('Sorry, No Worker Support for the Browser. Please Use the Latest Version of Chrome, Firefox or Safari');
+      throw 'Sorry, No Worker Support for the Browser. Please Use the Latest Version of Chrome, Firefox or Safari';
+    }
     
-    $.getJSON('http://localhost:3000/ci', function(data) {
-      $.each(data, function(index, value) {
-        // $.getJSON(value.url+'/lastBuild/api/json', function(data2) {
-          var job = $('div[data-jobname="'+value.name+'"]');
-          if (!job.length) {
-            job = $('<div>', {class: 'item has-padding'}).data('jobname', value.name).text(value.name);  
-            $('#container').append(job);
-          }
-          currentState = value.lastBuild.result.toLowerCase();
-          job.removeClass('success failed aborted building').addClass(currentState);
-        });
-      // });
-    });
+    var scheduler = new Worker('js/ci.scheduler.js');
+    scheduler.onmessage = function(event) {
+      $.getJSON('http://localhost:3000/jenkins/ci.jruby.org', function(data) {
+        monitor.postMessage(data);
+      });
+    };
+    
+    var monitor = new Worker('js/ci.monitor.js');
+    monitor.onmessage = function(event) {
+      $.each(event.data, function(index, job) {
+        var $job = $('div[data-job-name="'+job.name+'"]');
+        if (!$job.length) {
+          $job = $('<div>', {class: 'job has-padding'}).attr('data-job-name', job.name).text(job.name);
+          $job.click(function(event) {
+            // alert($(event.target).data('job-url'));
+            event.stopImmediatePropagation();
+            event.stopPropagation();
+          });
+          $('#container').append($job);
+        }
+        currentState = job.lastBuild.result.toLowerCase();
+        $job.attr('data-job-url', job.lastBuild.url);
+        $job.removeClass('success failed aborted building').addClass(currentState);
+      });
+    };
+    
+    
   });
   </script>
 </html> 
