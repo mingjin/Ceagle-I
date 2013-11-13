@@ -23,7 +23,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/jenkins/:host', function(req, res) {
-    rest.get({host: req.params.host, path:'/api/json?tree=jobs[name,buildable,healthReport[score],lastBuild[result,url]]'}, function(status, result){
+    rest.get({host: req.params.host, path:'/api/json?tree=jobs[name,buildable,healthReport[score],lastBuild[result,building,url]]'}, function(status, result){
         var activeJobs = result.jobs.filter(function(job) {
             return job.buildable;
         });

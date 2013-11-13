@@ -3,7 +3,7 @@ var i = 0;
 function scheduling(){
     i = ++i;
     postMessage(i);
-    setTimeout("scheduling()", 10000);
+    setTimeout("scheduling()", 180000);
 }
 
 scheduling();

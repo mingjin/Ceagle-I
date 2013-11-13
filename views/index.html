@@ -2,14 +2,25 @@
 <html>
   <head>
     <title>Ceagle-I: CI from Eagle Eye</title>
-    <link rel="stylesheet" href="/css/jquery.growl.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="/css/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
     <div id="container" class="container">
     </div>
+    <div class="row">
+      <div class="col-md-5">
+      </div>
+      <div class="col-md-5">
+        &copy Ming Jin
+      </div>
+      <div class="col-md-2">
+        <div class="alert alert-info">Last Updated at <span class="time"></span></div>
+      </div>
+    </div>
   </body>
   <script src="/js/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
   $(function(){
     if (typeof(Worker) === 'undefined') {
@@ -37,10 +48,11 @@
           });
           $('#container').append($job);
         }
-        currentState = job.lastBuild.result.toLowerCase();
         $job.attr('data-job-url', job.lastBuild.url);
-        $job.removeClass('success failed aborted building').addClass(currentState);
+        $job.removeClass('success failed aborted building').addClass(job.lastBuild.building ? 'building' : job.lastBuild.result.toLowerCase())
       });
+      var now = new Date();
+      $('span.time').text(now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes());
     };
     
     
