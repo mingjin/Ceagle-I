@@ -7,6 +7,7 @@ var app = express();
 app.configure(function(){
     app.use(express.logger());
     app.use(express.compress());
+    app.use(express.bodyParser());
     app.use(express.static(__dirname + '/public'));
     app.use(express.favicon(__dirname + '/public/img/favicon.ico', { maxAge: 2592000000 }));
     app.set('views', __dirname + '/views');
@@ -22,8 +23,17 @@ app.get('/', function(req, res) {
     res.render('index.html');
 });
 
-app.get('/jenkins/:host', function(req, res) {
-    rest.get({host: req.params.host, path:'/api/json?tree=jobs[name,buildable,healthReport[score],lastBuild[result,building,url]]'}, function(status, result){
+app.post('/q', function(req, res) {
+    var options = {
+        host: req.body['host'],
+        port: req.body['port'] || 80,
+        path: '/api/json?tree=jobs[name,buildable,healthReport[score],lastBuild[result,building,url]]',
+        method: 'get'
+    };
+    if (req.body['username'] && req.body['password']) {
+        options.headers = {'Authorization': 'Basic '+new Buffer(req.body['username']+':'+req.body['password']).toString('base64')};
+    }
+    rest.get(options, function(status, result){
         var activeJobs = result.jobs.filter(function(job) {
             return job.buildable;
         });

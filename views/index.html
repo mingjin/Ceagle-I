@@ -30,7 +30,7 @@
     
     var scheduler = new Worker('js/ci.scheduler.js');
     scheduler.onmessage = function(event) {
-      $.getJSON('http://localhost:3000/jenkins/ci.jruby.org', function(data) {
+      $.post('/q', { host: 'ci.jruby.org' }).done(function(data) {
         monitor.postMessage(data);
       });
     };
