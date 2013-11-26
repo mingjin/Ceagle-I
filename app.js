@@ -9,7 +9,7 @@ app.configure(function(){
     app.use(express.compress());
     app.use(express.bodyParser());
     app.use(express.static(__dirname + '/public'));
-    app.use(express.favicon(__dirname + '/public/img/favicon.ico', { maxAge: 2592000000 }));
+    app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
     app.set('views', __dirname + '/views');
     app.set('view engine', 'html');
     app.engine('html', cons.ejs);
@@ -20,14 +20,14 @@ app.configure(function(){
 });
 
 app.get('/', function(req, res) {
-    res.render('index.html');
+    res.render('index');
 });
 
 app.post('/q', function(req, res) {
     var options = {
         host: req.body['host'],
         port: req.body['port'] || 80,
-        path: '/api/json?tree=jobs[name,buildable,healthReport[score],lastBuild[result,building,url]]',
+        path: (req.body['context'] || '') + '/api/json?tree=jobs[name,buildable,healthReport[score],lastBuild[result,building,url]]',
         method: 'get'
     };
     if (req.body['username'] && req.body['password']) {

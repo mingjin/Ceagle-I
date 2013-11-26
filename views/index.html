@@ -24,12 +24,15 @@
   <script type="text/javascript" charset="utf-8">
   $(function(){
     if (typeof(Worker) === 'undefined') {
-      alert('Sorry, No Worker Support for the Browser. Please Use the Latest Version of Chrome, Firefox or Safari');
-      throw 'Sorry, No Worker Support for the Browser. Please Use the Latest Version of Chrome, Firefox or Safari';
+      var error = 'Sorry, No Worker Support for this Browser. Please Use the Latest Version of Chrome, Firefox or Safari.'
+      console.error(error);
+      alert(error);
+      throw error;
     }
     
     var scheduler = new Worker('js/ci.scheduler.js');
     scheduler.onmessage = function(event) {
+      console.log('Start to Retrieve the CI Status for the '+ event.data + ' Times...')
       $.post('/q', { host: 'ci.jruby.org' }).done(function(data) {
         monitor.postMessage(data);
       });

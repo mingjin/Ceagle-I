@@ -16,8 +16,7 @@ var https = require("https");
 */
 exports.get = function(options, onResult){
     var prot = options.port == 443 ? https : http;
-    var req = prot.request(options, function(res)
-    {
+    var req = prot.request(options, function(res) {
         var output = '';
         console.log(options.host + ':' + res.statusCode);
         res.setEncoding('utf8');
