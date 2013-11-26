@@ -1,6 +1,7 @@
 var express = require('express'),
     cons = require('consolidate'),
-    rest = require('./service/rest.js');
+    conf = require('./config/config.dev.js'),
+    jenkins = require('./service/jenkins.js');
     
 var app = express();
 
@@ -23,22 +24,42 @@ app.get('/', function(req, res) {
     res.render('index');
 });
 
+app.get('/index2.html', function(req, res) {
+    res.render('index2');
+});
+
 app.post('/q', function(req, res) {
-    var options = {
-        host: req.body['host'],
-        port: req.body['port'] || 80,
-        path: (req.body['context'] || '') + '/api/json?tree=jobs[name,buildable,healthReport[score],lastBuild[result,building,url]]',
-        method: 'get'
-    };
-    if (req.body['username'] && req.body['password']) {
-        options.headers = {'Authorization': 'Basic '+new Buffer(req.body['username']+':'+req.body['password']).toString('base64')};
-    }
-    rest.get(options, function(status, result){
-        var activeJobs = result.jobs.filter(function(job) {
-            return job.buildable;
-        });
-        res.json(activeJobs);
-    });
+	jenkins.fetch(req.body, function(data){
+		res.json(data);
+	});
+});
+
+app.get('/qq', function(req, res) {
+	jobs = JSON.parse(JSON.stringify(conf.jobs));
+	
+	Object.keys(conf.hosts).forEach(function(key){
+		host = conf.hosts[key];
+		jenkins.fetch(host, function(data) {
+			data.forEach(function(job){
+				Object.keys(jobs).forEach(function(key2) {
+					job2 = jobs[key2];
+					if (job2.name === job.name && job2.host === key) {
+						job2.build = job;
+					}
+				});
+			});
+		});
+	});
+	
+	pipeline = JSON.parse(JSON.stringify(conf.pipeline));
+	Object.keys(pipeline).forEach(function(moduleKey){
+		module = pipeline[moduleKey];
+		module.jobs = module.jobs.map(function(job) {
+			jobs[job]
+		});
+	});
+	
+	res.json(pipeline);
 });
 
 app.listen(3000);
