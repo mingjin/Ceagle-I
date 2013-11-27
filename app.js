@@ -1,6 +1,6 @@
 var express = require('express'),
     cons = require('consolidate'),
-    conf = require('./config/config.dev.js'),
+    conf = require('./config/config.prod.js'),
     jenkins = require('./service/jenkins.js');
     
 var app = express();
@@ -34,32 +34,41 @@ app.post('/q', function(req, res) {
 	});
 });
 
+function recursiveModules(modules, jobs) {
+	Object.keys(modules).forEach(function(moduleKey) {
+		module = modules[moduleKey];
+		module.jobs = module.jobs.map(function(job) {
+			return jobs[job];
+		});
+		if (!!module.submodules) {
+			recursiveModules(module.submodules, jobs);
+		}
+	});
+}
+
 app.get('/qq', function(req, res) {
 	jobs = JSON.parse(JSON.stringify(conf.jobs));
+	pipeline = JSON.parse(JSON.stringify(conf.pipeline));
 	
+	var length = Object.keys(conf.hosts).length;
 	Object.keys(conf.hosts).forEach(function(key){
 		host = conf.hosts[key];
 		jenkins.fetch(host, function(data) {
+			length --;
 			data.forEach(function(job){
 				Object.keys(jobs).forEach(function(key2) {
 					job2 = jobs[key2];
-					if (job2.name === job.name && job2.host === key) {
-						job2.build = job;
+					if (job2.name == job.name && job2.host == key) {
+						jobs[key2] = job;
 					}
 				});
 			});
+			if( length == 0) {
+				recursiveModules(pipeline, jobs);
+				res.json(pipeline);
+			}
 		});
 	});
-	
-	pipeline = JSON.parse(JSON.stringify(conf.pipeline));
-	Object.keys(pipeline).forEach(function(moduleKey){
-		module = pipeline[moduleKey];
-		module.jobs = module.jobs.map(function(job) {
-			jobs[job]
-		});
-	});
-	
-	res.json(pipeline);
 });
 
 app.listen(3000);

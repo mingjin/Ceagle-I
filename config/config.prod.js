@@ -51,7 +51,7 @@ exports.jobs = {
 
 exports.pipeline = {
 	gut: {
-		jobs : ['1'],
+		jobs : ['1', '2', '3'],
 		submodules : {
 			ems : {
 				jobs : ['1'],
@@ -62,7 +62,35 @@ exports.pipeline = {
 					},
 					
 					app : {
-						jobs : ['2', '3', '4', '5']
+						jobs : ['4', '5']
+					}
+				}
+			},
+			
+			ommr : {
+				jobs : ['1'],
+				
+				submodules : {
+					north : {
+						jobs : ['6']
+					},
+					
+					app : {
+						jobs : ['2', '3']
+					}
+				}
+			},
+			
+			ommb : {
+				jobs : ['1'],
+				
+				submodules : {
+					north : {
+						jobs : ['6']
+					},
+					
+					app : {
+						jobs : ['3', '4']
 					}
 				}
 			}

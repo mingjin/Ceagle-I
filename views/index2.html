@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Ceagle-I: CI from Eagle Eye</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <!--link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" media="screen" title="no title" charset="utf-8"-->
     <link rel="stylesheet" href="/css/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
@@ -23,8 +23,37 @@
   <script src="/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
   $(function(){
+	function recursiveModules(key, value) {
+		var $table = $('<table>');
+		var $thead = $('<thead>');
+		var $th = $('<th>').text(key)
+		var $tbody = $('<tbody>');
+		var $jobs = $('<tr>');
+		$table.append($thead.append($('<tr>').append($('<th>').text(key)))).append($tbody.append($('<tr>').append($('<td>').append($('<table>').append($jobs)))));
+		$.each(value.jobs, function(index, job) {
+			var $job = $('<td>').text(job.name);
+			$jobs.append($job);
+			$job.attr('data-job-url', job.lastBuild.url);
+			$job.removeClass('success failed aborted building').addClass(job.lastBuild.building ? 'building' : job.lastBuild.result.toLowerCase())
+		});
+		if(!!value.submodules) {
+			var $submodules = $('<tr>');
+			$tbody.append($('<tr>').append($('<td>').append($('<table>').append($submodules))));
+			$.each(value.submodules, function(key, value) {
+				var $submodule = $('<td>');
+				$submodule.append(recursiveModules(key, value))
+				$submodules.append($submodule);
+			});
+		}
+		return $table;
+	}
 	$.get('/qq', function(data) {
-  });
+		$.each(data, function(key, value) {
+			$('#container').append(recursiveModules(key, value));
+			var now = new Date();
+			$('span.time').text(now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes());
+		});
+	});
     
     
   });
