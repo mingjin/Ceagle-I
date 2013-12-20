@@ -33,8 +33,10 @@
 		$.each(value.jobs, function(index, job) {
 			var $job = $('<td>').text(job.name);
 			$jobs.append($job);
-			$job.attr('data-job-url', job.lastBuild.url);
-			$job.removeClass('success failed aborted building').addClass(job.lastBuild.building ? 'building' : job.lastBuild.result.toLowerCase())
+      if (!!job.lastBuild) {
+  			$job.attr('data-job-url', job.lastBuild.url);
+  			$job.removeClass('success failed aborted building').addClass(job.lastBuild.building ? 'building' : job.lastBuild.result.toLowerCase());
+      }
 		});
 		if(!!value.submodules) {
 			var $submodules = $('<tr>');
