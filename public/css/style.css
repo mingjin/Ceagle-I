@@ -43,6 +43,22 @@ body {
   transition-property: left, right, top; 
 }
 
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+th {
+  font-size: 1.5em;
+}
+
+td {
+  color: black;
+  word-wrap: break-word;
+  vertical-align: top;
+  letter-spacing: 20px;
+}
+
 .has-padding {
   padding: 0.3em 0.5em;
 }
@@ -51,7 +67,7 @@ body {
   background-color : green;
 }
 
-.failed {
+.failure {
   background-color: red;
 }
 
