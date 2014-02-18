@@ -20,14 +20,6 @@ app.configure(function(){
     });
 });
 
-app.get('/', function(req, res) {
-    res.render('index');
-});
-
-app.get('/index2.html', function(req, res) {
-    res.render('index2');
-});
-
 app.post('/q', function(req, res) {
 	jenkins.fetch(req.body, function(data){
 		res.json(data);
