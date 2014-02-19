@@ -105,6 +105,7 @@ body {
 
 .stage {
   float: left;
+  margin: 0 15px;
 }
 
 .stage-arrow {
@@ -113,9 +114,31 @@ body {
 
 .stage-head {
   background-color: green;
-  
 }
+.stage-head p {
+  margin-bottom: 0;
+}
+
 .stage-body {
   background-color: white;
   border: 1px solid black;
+}
+
+.module {
+  border-left: 2px solid;
+  margin: 2px;
+}
+
+.module > .module-head {
+  text-align: left;
+  margin: 2px;
+}
+
+.job {
+  float: left;
+  margin: 2px;
+}
+
+.job.success {
+  background-color: green;
 }
