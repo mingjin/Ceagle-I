@@ -44,6 +44,7 @@ body {
 
 /* Sidebar navigation */
 .nav-sidebar {
+  margin-top: 30px;
   margin-right: -21px; /* 20px padding + 1px border */
   margin-bottom: 20px;
   margin-left: -20px;
@@ -93,4 +94,28 @@ body {
 .placeholder img {
   display: inline-block;
   border-radius: 50%;
+}
+
+.pipeline {
+  border: 1px solid black;
+  width: 96%;
+  margin-left: 2%;
+  margin-bottom: 50px;
+}
+
+.stage {
+  float: left;
+}
+
+.stage-arrow {
+  float: left;
+}
+
+.stage-head {
+  background-color: green;
+  
+}
+.stage-body {
+  background-color: white;
+  border: 1px solid black;
 }
