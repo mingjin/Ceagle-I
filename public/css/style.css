@@ -21,9 +21,7 @@ body{
   width:64%;
 }
 
-.main-block.product > .jobs-group{
-  height: 926px;
-}
+
 
 .row-of-sub-object{
   height: 282px;
@@ -34,6 +32,10 @@ body{
 .jobs-group{
   border:solid #ddd 1px;
   height: 100%;
+}
+
+.jobs-group.product{
+  height: 926px;
 }
 
 .jobs-group.module{
@@ -47,9 +49,9 @@ body{
 }
 
 .jobs-group.module.two-column .job{
-  width: 49.5%;
+  width: 49.7%;
   float: left;
-  margin-right: 2px;
+  margin-right: 1px;
 }
 
 .group-header{
@@ -111,4 +113,22 @@ body{
 .job-time{
   font-size: 12px;
   color:#ccc;
+}
+
+.arrow.glyphicon-chevron-left{
+  float: left;
+  position: relative;
+  left: -30px;
+  top: 16px;
+  font-size: 20px;
+  color: #aaa;
+}
+.back-arrow.glyphicon-chevron-left{
+  float: left;
+  position: relative;
+  right: -97%;
+  top: 16px;
+  font-size: 20px;
+  color: #aaa;
+  z-index:1;
 }
