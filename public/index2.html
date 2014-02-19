@@ -2,11 +2,33 @@
 <html>
   <head>
     <title>Ceagle-I: CI from Eagle Eye</title>
+    <meta charset="utf-8">
+
     <!--link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" media="screen" title="no title" charset="utf-8"-->
-    <link rel="stylesheet" href="/css/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="css/jquery.gridster.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
-    <div id="container" class="container">
+  	<div class="gridster">
+    <ul>
+        <li data-row="1" data-col="1" data-sizex="1" data-sizey="1"></li>
+        <li data-row="2" data-col="1" data-sizex="1" data-sizey="1"></li>
+        <li data-row="3" data-col="1" data-sizex="1" data-sizey="1"></li>
+ 
+        <li data-row="1" data-col="2" data-sizex="2" data-sizey="1"></li>
+        <li data-row="2" data-col="2" data-sizex="2" data-sizey="2"></li>
+ 
+        <li data-row="1" data-col="4" data-sizex="1" data-sizey="1"></li>
+        <li data-row="2" data-col="4" data-sizex="2" data-sizey="1"></li>
+        <li data-row="3" data-col="4" data-sizex="1" data-sizey="1"></li>
+ 
+        <li data-row="1" data-col="5" data-sizex="1" data-sizey="1"></li>
+        <li data-row="3" data-col="5" data-sizex="1" data-sizey="1"></li>
+ 
+        <li data-row="1" data-col="6" data-sizex="1" data-sizey="1"></li>
+        <li data-row="2" data-col="6" data-sizex="1" data-sizey="2"></li>
+    </ul>
+</div>
+    <!--div id="container" class="container">
     </div>
     <div class="row">
       <div class="col-md-5">
@@ -17,47 +39,29 @@
       <div class="col-md-2">
         <div class="alert alert-info">Last Updated at <span class="time"></span></div>
       </div>
-    </div>
+    </div-->
   </body>
-  <script src="/js/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-  <script type="text/javascript" charset="utf-8">
-  $(function(){
-	function recursiveModules(key, value) {
-		var $table = $('<table>');
-		var $thead = $('<thead>');
-		var $th = $('<th>').text(key)
-		var $tbody = $('<tbody>');
-		var $jobs = $('<tr>');
-		$table.append($thead.append($('<tr>').append($('<th>').text(key)))).append($tbody.append($('<tr>').append($('<td>').append($('<table>').append($jobs)))));
-		$.each(value.jobs, function(index, job) {
-			var $job = $('<td>').text(job.name);
-			$jobs.append($job);
-      if (!!job.lastBuild) {
-  			$job.attr('data-job-url', job.lastBuild.url);
-  			$job.removeClass('success failed aborted building').addClass(job.lastBuild.building ? 'building' : job.lastBuild.result.toLowerCase());
-      }
-		});
-		if(!!value.submodules) {
-			var $submodules = $('<tr>');
-			$tbody.append($('<tr>').append($('<td>').append($('<table>').append($submodules))));
-			$.each(value.submodules, function(key, value) {
-				var $submodule = $('<td>');
-				$submodule.append(recursiveModules(key, value))
-				$submodules.append($submodule);
-			});
-		}
-		return $table;
-	}
-	$.get('/qq', function(data) {
-		$.each(data, function(key, value) {
-			$('#container').append(recursiveModules(key, value));
-			var now = new Date();
-			$('span.time').text(now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes());
-		});
-	});
-    
-    
-  });
-  </script>
+  <script src="js/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/jquery.gridster.min.js" type="text/javascript" charset="utf-8"></script>
+
+
+  <script type="text/javascript">
+        var gridster = [];
+
+        $(function() {
+
+            gridster[0] = $("#demo-1 ul").gridster({
+                namespace: '#demo-1',
+                widget_base_dimensions: [100, 55],
+                widget_margins: [5, 5]
+            }).data('gridster');
+
+            gridster[1] = $("#demo-2 ul").gridster({
+                namespace: '#demo-2',
+                widget_base_dimensions: [200, 110],
+                widget_margins: [10, 10]
+            }).data('gridster');
+
+        });
+    </script>
 </html> 
