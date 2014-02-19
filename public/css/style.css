@@ -1,9 +1,11 @@
 body{
   padding: 20px;
+  width: 1920px;
 }
 
 .content{
-  height: 950px;
+  height: 930px;
+  width: 100%;
 }
 
 .main-block{
@@ -11,13 +13,13 @@ body{
   float: left;
 }
 .main-block.product{
-  width:220px;
+  width:224px;
 }
 .main-block.sub-project{
-  width:260px;
+  width:270px;
 }
 .main-block.module{
-  width:1360px;
+  width:1386px;
 }
 
 
@@ -29,10 +31,9 @@ body{
 
 
 .jobs-group{
-  border:solid #ddd 1px;
-  height: 100%;
+  border:solid #aaa 1px;
   width: 220px;
- 
+  height: 100%;
 }
 
 .jobs-group.product{
@@ -45,6 +46,7 @@ body{
 
 .jobs-group.module{
   float: left;
+  margin-left: -1px;
 }
 
 .jobs-group.module.two-column{
@@ -53,18 +55,18 @@ body{
 }
 
 .jobs-group.module.two-column .job{
-  width: 226px;
+  width: 215px;
   float: left;
-  margin-right: 1px;
+  margin-right: 2px;
 }
 
 .group-header{
   height:50px;
-  background-color: #aaa;
+  background-color: #bbb;
   line-height: 50px;
   font-size: 20px;
   color:#fff;
-  padding-left: 4px;
+  padding-left: 8px;
 }
 
 .group-content{
@@ -93,13 +95,13 @@ body{
 
 
 .status.success{
-  background-color: #46C534;
+  background-color: #8db226;
 }
 .status.fail{
-  background-color: #990000;
+  background-color: #ba3e25;
 }
 .status.doing{
-  background-color: #999900;
+  background-color: #f3db17;
 }
 
 .job-content{
@@ -126,6 +128,7 @@ body{
   top: 14px;
   width:40px;
   left:10px;
+  color: #ccc;
 }
 
 
