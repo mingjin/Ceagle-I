@@ -9,17 +9,15 @@ body{
 .main-block{
   height: 100%;
   float: left;
-  padding: 0px 20px;
 }
 .main-block.product{
-  width:230px;
+  width:220px;
 }
 .main-block.sub-project{
-  width:270px;
-  padding: 0px;
+  width:260px;
 }
 .main-block.module{
-  width:1380px;
+  width:1360px;
 }
 
 
@@ -33,6 +31,8 @@ body{
 .jobs-group{
   border:solid #ddd 1px;
   height: 100%;
+  width: 220px;
+ 
 }
 
 .jobs-group.product{
@@ -40,22 +40,20 @@ body{
 }
 
 .jobs-group.sub-project{
-  width: 230px;
   float: left;
 }
 
 .jobs-group.module{
-  width: 16.6667%;
   float: left;
 }
 
 .jobs-group.module.two-column{
-  width: 33.3333%;
+  width: 440px;
   float: left;
 }
 
 .jobs-group.module.two-column .job{
-  width: 49.7%;
+  width: 226px;
   float: left;
   margin-right: 1px;
 }
@@ -126,12 +124,8 @@ body{
   font-size: 20px;
   position: relative;
   top: 14px;
-}
-
-.arrow.front{
-  left:-10px;
-}
-
-.arrow.back{
+  width:40px;
   left:10px;
 }
+
+
