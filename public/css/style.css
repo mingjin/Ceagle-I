@@ -25,7 +25,7 @@ body{
   height: 926px;
 }
 
-.main-block.sub-project > .row-of-sub-object{
+.row-of-sub-object{
   height: 282px;
   margin-bottom: 40px;
 }
@@ -34,6 +34,22 @@ body{
 .jobs-group{
   border:solid #ddd 1px;
   height: 100%;
+}
+
+.jobs-group.module{
+  width: 16.6667%;
+  float: left;
+}
+
+.jobs-group.module.two-column{
+  width: 33.3333%;
+  float: left;
+}
+
+.jobs-group.module.two-column .job{
+  width: 49.5%;
+  float: left;
+  margin-right: 2px;
 }
 
 .group-header{
