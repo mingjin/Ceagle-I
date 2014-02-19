@@ -12,13 +12,14 @@ body{
   padding: 0px 20px;
 }
 .main-block.product{
-  width:16%;
+  width:230px;
 }
 .main-block.sub-project{
-  width:16%;
+  width:270px;
+  padding: 0px;
 }
 .main-block.module{
-  width:64%;
+  width:1380px;
 }
 
 
@@ -36,6 +37,11 @@ body{
 
 .jobs-group.product{
   height: 926px;
+}
+
+.jobs-group.sub-project{
+  width: 230px;
+  float: left;
 }
 
 .jobs-group.module{
@@ -115,20 +121,17 @@ body{
   color:#ccc;
 }
 
-.arrow.glyphicon-chevron-left{
+.arrow{
   float: left;
-  position: relative;
-  left: -30px;
-  top: 16px;
   font-size: 20px;
-  color: #aaa;
+  position: relative;
+  top: 14px;
 }
-.back-arrow.glyphicon-chevron-left{
-  float: left;
-  position: relative;
-  right: -97%;
-  top: 16px;
-  font-size: 20px;
-  color: #aaa;
-  z-index:1;
+
+.arrow.front{
+  left:-10px;
+}
+
+.arrow.back{
+  left:10px;
 }
