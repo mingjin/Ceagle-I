@@ -5,16 +5,23 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 50px;
+
 }
 
-
+section{
+  margin-bottom: 60px;
+}
 /*
  * Global add-ons
  */
 
 .sub-header {
   padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
+  background-color: #eee;
+  border-left: #000000 solid 4px;
+  line-height: 50px;
+  height: 50px;
+  padding-left: 14px;
 }
 
 
@@ -66,12 +73,7 @@ body {
 .main {
   padding: 20px;
 }
-@media (min-width: 768px) {
-  .main {
-    padding-right: 40px;
-    padding-left: 40px;
-  }
-}
+
 .main .page-header {
   margin-top: 0;
 }
@@ -97,23 +99,52 @@ body {
 }
 
 .pipeline {
-  border: 1px solid black;
-  width: 96%;
+  border: 1px solid #999;
+  width: 98%;
   margin-left: 2%;
-  margin-bottom: 50px;
+  margin-bottom: 20px
+}
+
+.pipeline-header {
+  height: 40px;
+  line-height: 40px;
+  color: #fff;
+  font-size: 16px;
+  padding: 0px 10px;
+}
+
+.pipeline-details{
+  padding: 20px 4%;
+}
+
+.success{
+  background-color: #8db226;
+}
+.fail{
+  background-color: #ba3e25;
+}
+.doing{
+  background-color: #f3db17;
 }
 
 .stage {
   float: left;
-  margin: 0 15px;
+  width: 12%;
+  height: 150px;
+  border: solid 1px #aaa;
 }
 
 .stage-arrow {
   float: left;
+  width: 4%;
 }
 
 .stage-head {
-  background-color: green;
+  height: 28px;
+  font-size: 12px;
+  line-height: 28px;
+  color: #fff;
+  padding-left: 6px;
 }
 .stage-head p {
   margin-bottom: 0;
@@ -121,7 +152,6 @@ body {
 
 .stage-body {
   background-color: white;
-  border: 1px solid black;
 }
 
 .module {
