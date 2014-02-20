@@ -11,6 +11,15 @@ body {
 section{
   margin-bottom: 60px;
 }
+
+.btn.btn-primary{
+  background-image: none;
+}
+
+.timeInfo{
+  position: relative;
+  top: 7px;
+}
 /*
  * Global add-ons
  */
@@ -114,7 +123,7 @@ section{
 }
 
 .pipeline-details{
-  padding: 20px 4%;
+  padding: 36px 4%;
 }
 
 .success{
@@ -129,46 +138,142 @@ section{
 
 .stage {
   float: left;
-  width: 12%;
-  height: 150px;
   border: solid 1px #aaa;
 }
 
-.stage-arrow {
+.product .stage {
+  width: 14%;
+  height: 100px;
+}
+
+.sub-project .stage {
+  width: 30%;
+  height: 100%;
+}
+
+.product .stage-arrow {
   float: left;
-  width: 4%;
+  width: 3.2%;
+}
+
+.product .stage-arrow > span{
+  position: relative;
+  top: 8px;
+  left: 30%;
+  color: #aaa;
+}
+
+.sub-project .stage-arrow {
+  float: left;
+  width: 3%;
+}
+
+.sub-project .stage-arrow > span{
+  position: relative;
+  top: 22px;
+  left: 30%;
+  color: #aaa;
 }
 
 .stage-head {
+  color: #fff;
+}
+
+.product .stage-head {
   height: 28px;
   font-size: 12px;
   line-height: 28px;
-  color: #fff;
   padding-left: 6px;
 }
-.stage-head p {
+
+.sub-project .stage-head{
+  padding: 4px;
+}
+
+.product .stage-head p {
   margin-bottom: 0;
 }
 
-.stage-body {
+.product .stage-body {
   background-color: white;
+  text-align: center;
+  padding-top: 22px;
+  font-size: 12px;
+}
+
+.sub-project .stage-body {
+  background-color: white;
+  padding: 2px 2px 0px 2px;
+}
+
+.sub-project .stage-title{
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.sub-project .stage-time{
+  margin-bottom: 0px;
 }
 
 .module {
-  border-left: 2px solid;
-  margin: 2px;
+  border-left: 2px solid #aaa;
+  padding-left: 2px;
+  margin-bottom: 2px;
 }
 
 .module > .module-head {
   text-align: left;
   margin: 2px;
+  height: 20px;
+  line-height: 20px;
+  color: #333;
 }
 
-.job {
+.mini-job {
   float: left;
-  margin: 2px;
+  margin:2px 2px 0px 2px;
+  width: 36px;
+  height: 36px;
+  color: #fff;
+  line-height: 36px;
+  text-align: center;
 }
 
-.job.success {
-  background-color: green;
+.job{
+  background-color: #eee;
+  margin-bottom: 2px;
+}
+
+.job-content:after{
+  clear:both;
+  height: 100px;
+}
+
+.job-content{
+  float: left;
+  height: 36px;
+  padding: 2px 0px 2px 3px;
+}
+
+
+.job-title{
+  font-size: 12px;
+  color:#333;
+  line-height: 18px;
+}
+
+.job-time{
+  font-size: 12px;
+  color:#ccc;
+}
+
+
+.status{
+  float: left;
+  width: 36px;
+  height: 36px;
+  color: #fff;
+  line-height: 36px;
+  text-align: center;
+  font-size: 12px;
 }
