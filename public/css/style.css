@@ -1,25 +1,31 @@
 body{
   padding: 20px;
+  width: 1920px;
+}
+.header{
+  font-size: 26px;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: solid 2px #ddd;
 }
 
 .content{
-  height: 950px;
+  height: 930px;
+  width: 100%;
 }
 
 .main-block{
   height: 100%;
   float: left;
-  padding: 0px 20px;
 }
 .main-block.product{
-  width:230px;
+  width:224px;
 }
 .main-block.sub-project{
   width:270px;
-  padding: 0px;
 }
 .main-block.module{
-  width:900px;
+  width:1386px;
 }
 
 
@@ -31,7 +37,8 @@ body{
 
 
 .jobs-group{
-  border:solid #ddd 1px;
+  border:solid #aaa 1px;
+  width: 220px;
   height: 100%;
 }
 
@@ -40,33 +47,32 @@ body{
 }
 
 .jobs-group.sub-project{
-  width: 230px;
   float: left;
 }
 
 .jobs-group.module{
-  width: 150px;
   float: left;
+  margin-left: -1px;
 }
 
 .jobs-group.module.two-column{
-  width: 460px;
+  width: 440px;
   float: left;
 }
 
 .jobs-group.module.two-column .job{
-  width: 49.7%;
+  width: 215px;
   float: left;
-  margin-right: 1px;
+  margin-right: 2px;
 }
 
 .group-header{
   height:50px;
-  background-color: #aaa;
+  background-color: #bbb;
   line-height: 50px;
   font-size: 20px;
   color:#fff;
-  padding-left: 4px;
+  padding-left: 8px;
 }
 
 .group-content{
@@ -95,13 +101,13 @@ body{
 
 
 .status.success{
-  background-color: #46C534;
+  background-color: #8db226;
 }
 .status.fail{
-  background-color: #990000;
+  background-color: #ba3e25;
 }
 .status.doing{
-  background-color: #999900;
+  background-color: #f3db17;
 }
 
 .job-content{
@@ -126,12 +132,9 @@ body{
   font-size: 20px;
   position: relative;
   top: 14px;
-}
-
-.arrow.front{
-  left:-10px;
-}
-
-.arrow.back{
+  width:40px;
   left:10px;
+  color: #ccc;
 }
+
+
