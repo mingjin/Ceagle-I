@@ -20,8 +20,8 @@ function close(){
 
 function findByDate(date_start,date_end, callback){
 	connect();	
-	// console.log(date_start);
-	// console.log(date_end);
+	console.log(date_start);
+	console.log(date_end);
 	date_end = new Date(+date_end+24*60*60*1000);
 	JobStatus.find({ lastTime: { $gte: date_start,$lt:date_end } })
 		//.select('lastTime')

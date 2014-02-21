@@ -2,7 +2,8 @@ var express = require('express'),
     cons = require('consolidate'),
     sass = require('node-sass'),
     conf = require('./config/config.prod.js'),
-    jenkins = require('./service/jenkins.js');
+    jenkins = require('./service/jenkins.js'),
+    mongoose_util = require('./service/MongooseUtil.js');
     
 var app = express();
 
@@ -72,10 +73,25 @@ app.get('/qq', function(req, res) {
 });
 
 app.get('/pipelines', function(req, res) {
-	console.log(req.param("start"));
-	console.log(req.param("end"));
-	ret = {data:[1,2,3]};
-	res.json(ret);
+	var start = req.param("start");
+	var end = req.param("end");
+	if(start){
+		start = start.split('-');
+		start = new Date(start[0],start[1]-1,start[2]);
+		if(end){
+			end = end.split('-');
+			end = new Date(end[0],end[1]-1,end[2]);
+			mongoose_util.findBetweenDate(start,end,function(e,data){
+				//这里只要获取有数据的日期就可以
+				data=data.map(function(obj){return obj.lastTime});
+				res.json(data);
+			});
+		}else{
+			mongoose_util.findByDate(start,function(e,data){
+				res.json(data);
+			});
+		}
+	}
 });
 
 
