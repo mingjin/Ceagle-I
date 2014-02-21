@@ -71,5 +71,13 @@ app.get('/qq', function(req, res) {
 	});
 });
 
+app.get('/pipelines', function(req, res) {
+	console.log(req.param("start"));
+	console.log(req.param("end"));
+	ret = {data:[1,2,3]};
+	res.json(ret);
+});
+
+
 app.listen(3000);
 console.log('Listening on port 3000');
