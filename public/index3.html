@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="css/sample.css" type="text/css" media="screen" charset="utf-8">
     <script src="js/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/responsive-calendar.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/responsive-calendar.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/moment.min.js" type="text/javascript" charset="utf-8"></script>
   </head>
   <body data-spy="scroll" data-target="#side-nav" data-offset="20" >
@@ -322,19 +322,39 @@
       </div>
     </div>
     <script type="text/javascript">
-      $(document).ready(function () {
-        $.get('/pipelines?start=2014-02-01&end=2014-02-28',function(data){
-          var marked = {};
-          data.forEach(function(obj){
-            obj = moment(obj).format('YYYY-MM-DD');
-            marked[obj]={"number": 1, "url": "/index3.html?start="+obj}
+      function mark_builds_on_calendar(year,month){
+        start = moment(new Date(year,month-1,1)).format('YYYY-MM-DD');
+        end = moment(new Date(year,month,1)).format('YYYY-MM-DD');
+        
+        $.get('/pipelines?start='+start+'&end='+end,function(data){
+            var marked = {};
+            data.forEach(function(obj){
+              obj = moment(obj).format('YYYY-MM-DD');
+              marked[obj]={"number": 1, "url": "#"};
+            });
+            $(".responsive-calendar").responsiveCalendar(
+              'edit', marked
+            );          
           });
-          $(".responsive-calendar").responsiveCalendar({
-            time: '2014-02',
-            events: marked
-          });          
-        });
+      }
 
+      function get_build_by_date(date){
+        $.get('/pipelines?start='+moment(date).format('YYYY-MM-DD'),function(data){
+          console.log(data[0].pipeline);
+        });
+      }
+
+      $(document).ready(function (){
+        $('.responsive-calendar').responsiveCalendar({
+            onMonthChange: function(month) {
+              month=month.split('-');
+              get_builds_on_calendar(+month[0],+month[1]);
+            },
+            onDayClick: function(events) {
+              get_build_by_date(new Date(+$(this).data('year'),+$(this).data('month')-1,+$(this).data('day')));
+            }
+        });
+        mark_builds_on_calendar(new Date().getFullYear(),new Date().getMonth()+1);
       });
     </script>
   </body>
