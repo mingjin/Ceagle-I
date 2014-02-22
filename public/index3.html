@@ -73,9 +73,9 @@
             </ul>
           </div>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3 main">
+        <div class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3 main" id="box-subprojects">
           <section id="gut" class="product">
-            <h2 class="sub-header">GUT</h2>
+            <h2 class="sub-header" id="project-name"></h2>
 
             <div class="pipeline">
               <div class="pipeline-header success" >
@@ -87,72 +87,7 @@
                 </div>
                 <div style="clear:both"></div>
               </div>
-              <div class="pipeline-details" >
-                <div class="stage">
-                  <div class="stage-head success">
-                    #99 任务名称
-                  </div>
-                  <div class="stage-body">
-                    03:11 - 03:12<br/>耗时1分钟
-                  </div>
-                </div>
-                <div class="stage-arrow">
-                  <span class="glyphicon glyphicon-chevron-right"></span>
-                </div>
-                <div class="stage">
-                  <div class="stage-head success">
-                    #99 任务名称
-                  </div>
-                  <div class="stage-body">
-                    03:11 - 03:12<br/>耗时1分钟
-                  </div>
-                </div>
-                <div class="stage-arrow">
-                  <span class="glyphicon glyphicon-chevron-right"></span>
-                </div>
-                <div class="stage">
-                  <div class="stage-head success">
-                    #99 任务名称
-                  </div>
-                  <div class="stage-body">
-                    03:11 - 03:12<br/>耗时1分钟
-                  </div>
-                </div>
-                <div class="stage-arrow">
-                  <span class="glyphicon glyphicon-chevron-right"></span>
-                </div>
-                <div class="stage">
-                  <div class="stage-head success">
-                    #99 任务名称
-                  </div>
-                  <div class="stage-body">
-                    03:11 - 03:12<br/>耗时1分钟
-                  </div>
-                </div>
-                <div class="stage-arrow">
-                  <span class="glyphicon glyphicon-chevron-right"></span>
-                </div>
-                <div class="stage">
-                  <div class="stage-head success">
-                    #99 任务名称
-                  </div>
-                  <div class="stage-body">
-                    03:11 - 03:12<br/>耗时1分钟
-                  </div>
-                </div>
-                <div class="stage-arrow">
-                  <span class="glyphicon glyphicon-chevron-right"></span>
-                </div>
-                <div class="stage">
-                  <div class="stage-head success">
-                    #99 任务名称
-                  </div>
-                  <div class="stage-body">
-                    03:11 - 03:12<br/>耗时1分钟
-                  </div>
-                </div>
-                <div style="clear: both"></div>
-              </div>
+              <div class="pipeline-details" id="project-jobs"></div>
             </div>
           </section>
           
@@ -184,24 +119,6 @@
                         北向
                       </div>
                       <div class="module-body">
-                        <div class="mini-job success">
-                          #99
-                        </div>
-                        <div class="mini-job success">
-                          #99
-                        </div>
-                        <div class="mini-job success">
-                          #99
-                        </div>
-                        <div class="mini-job success">
-                          #99
-                        </div>
-                        <div class="mini-job success">
-                          #99
-                        </div>
-                        <div class="mini-job success">
-                          #99
-                        </div>
                         <div style="clear:both"></div>
                       </div>
                       <div style="clear:both"></div>
@@ -254,31 +171,9 @@
                       耗时1分钟
                     </p>
                   </div>
-                  <div class="stage-body">
-                    <div class="job clearfix">
-                      <div class="status success">
-                        <p class="number">#87</p>
-                      </div>
-                      <div class="job-content">
-                        <div class="job-title">GUT_AU</div><div class="job-time">328</div>
-                      </div>
-                    </div>
-                    <div class="job clearfix">
-                      <div class="status doing">
-                        <p class="number">#87</p>
-                      </div>
-                      <div class="job-content">
-                        <div class="job-title">GUT_AU</div><div class="job-time">328</div>
-                      </div>
-                    </div>
-                    <div class="job clearfix">
-                      <div class="status fail">
-                        <p class="number">#87</p>
-                      </div>
-                      <div class="job-content">
-                        <div class="job-title">GUT_AU</div><div class="job-time">328</div>
-                      </div>
-                    </div>                    
+                  <div class="stage-body" id="subproject-jobs">
+                    
+                    
                   </div>
                 </div>
                 <div class="stage-arrow">
@@ -323,6 +218,7 @@
       </div>
     </div>
     <script type="text/javascript">
+      var project = null;
       function mark_builds_on_calendar(year,month){
         start = moment(new Date(year,month-1,1)).format('YYYY-MM-DD');
         end = moment(new Date(year,month,1)).format('YYYY-MM-DD');
@@ -343,6 +239,7 @@
         $.get('/pipelines?start='+moment(date).format('YYYY-MM-DD'),function(data){
           project = parsePipeline(JSON.parse(data[0].pipeline));
           console.log(project);
+          build_dashboard(project);
         });
       }
 
@@ -357,7 +254,86 @@
             }
         });
         mark_builds_on_calendar(new Date().getFullYear(),new Date().getMonth()+1);
+
+        // $.each(project.sub_projects,function(index,sub_project){
+          
+        //   $('#project.jobs').append(get_jobs_dom(project.jobs));
+        // });
+
       });
+
+      function build_dashboard(project){
+        $('#project-name').html(project.name);
+        $('#project-jobs').empty();
+        $('#project-jobs').append(get_jobs_dom(project.jobs));
+
+
+        var txt_stage_arrow = '<div class="stage-arrow"><span class="glyphicon glyphicon-chevron-right"></span></div>';
+        var txt_modules_stage = '<div class="stage modules-stage"><div class="stage-head success"><p class="stage-title">集成</p><p class="stage-time">00:15 - 00:16<br>耗时1分钟</p></div><div class="stage-body"></div></div>';
+        var txt_distribute_stage = '<div class="stage distribute-stage"><div class="stage-head success"><p class="stage-title">集成测试</p><p class="stage-time">00:15 - 00:16<br>耗时1分钟</p></div><div class="stage-body"><div class="job clearfix"><div class="status success"><p class="number">#87</p></div><div class="job-content"><div class="job-title">部署</div><div class="job-time">328</div></div></div></div></div>';
+        $("#box-subprojects").empty();
+        var txt_section_subproject = '<section class="sub-project"><h2 class="sub-header" id="sub-project-name"></h2><div class="pipeline"><div class="pipeline-header fail" id="sub-project-status"><div style="float: left"><span class="section-number">1</span> 开始于HH:mm，耗时12小时6分</div><div style="float: right;">测试用例117个，95%通过</div><div style="clear:both"></div></div><div class="pipeline-details"></div></div></section>';
+        var section_subproject=$(txt_section_subproject);
+        $("#box-subprojects").append(section_subproject);
+        $("#sub-project-name",section_subproject).html(project.name);
+        project.sub_projects.forEach(function(obj,index){
+          var section_subproject=$(txt_section_subproject);
+          $("#box-subprojects").append(section_subproject);
+          $("#sub-project-name",section_subproject).html(obj.name);
+          var modules_stage = $(txt_modules_stage);
+          var distribute_stage = $(txt_distribute_stage);
+          //$('.section-number',section_subproject).html(i);
+          $(".pipeline-details",section_subproject).append(modules_stage);
+          $(".pipeline-details",section_subproject).append($(txt_stage_arrow));
+          $(".pipeline-details",section_subproject).append(distribute_stage);
+          $(".pipeline-details",section_subproject).append($('<div style="clear: both"></div>'));
+        });
+        $('#subproject-jobs').empty();
+        $('#subproject-jobs').append(get_subpro_jobs_dom(project.sub_projects[0].jobs));
+      }
+
+      function get_job_class(job){
+        var class_job = 'doing';
+        if(!job.lastBuild){
+          class_job = 'success';
+          if(job.lastBuild.result != "SUCCESS")
+            class_job = 'fail';
+        }
+        return class_job;
+      }
+
+
+      function get_jobs_dom(jobs){
+            ret = "";
+            for(var i = 0 ; i< jobs.length; i++){
+                var job = jobs[i];
+                class_job = get_job_class(job);
+                ret = ret + '<div class="stage"><div class="stage-head '+class_job+'">#'+job.lastBuild.number+job.name+'</div><div class="stage-body">'+'job.start-end'+'<br/>耗时'+job.lastBuild.duration+'</div></div>';
+                if(i<jobs.length - 1){
+                  ret = ret + '<div class="stage-arrow"><span class="glyphicon glyphicon-chevron-right"></span></div>';
+                }else{
+                  ret = ret + '<div style="clear: both"></div>';
+                }
+            }         
+            console.log(ret);
+            return ret;                
+      }
+
+      function get_subpro_jobs_dom(jobs){
+        ret = "";
+        jobs.forEach(function(job,index){
+          ret = ret + '<div class="job clearfix"><div class="status '+get_job_class(job)+'"><p class="number">#'+job.lastBuild.number+'</p></div><div class="job-content"><div class="job-title">'+job.name+'</div><div class="job-time">'+job.lastBuild.duration+'</div></div></div>';
+        });
+        return ret;                  
+      }
+
+      function get_module_jobs_dom(jobs){
+        ret = "";
+        jobs.forEach(function(job,index){
+          ret = ret + '<div class="mini-job '+get_job_class(job)+'">#"'+job.lastBuild.number+'</div>';
+        });
+        return ret;                  
+      }      
     </script>
   </body>
 </html>
