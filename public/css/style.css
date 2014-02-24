@@ -31,8 +31,8 @@ body{
 
 
 .row-of-sub-object{
-  height: 282px;
-  margin-bottom: 40px;
+  height: 200px;
+  margin-bottom: 15px;
 }
 
 
@@ -49,27 +49,35 @@ body{
 .jobs-group.sub-project{
   float: left;
 }
+.jobs-group.sub-project.two-column{
+  float: left;
+}
 
+.jobs-group.sub-project.two-column .job{
+  width: 105px;
+  float: left;
+  margin-right: 2px;
+}
 .jobs-group.module{
   float: left;
   margin-left: -1px;
 }
 
 .jobs-group.module.two-column{
-  width: 440px;
+  width: 220px;
   float: left;
 }
 
 .jobs-group.module.two-column .job{
-  width: 215px;
+  width: 105px;
   float: left;
   margin-right: 2px;
 }
 
 .group-header{
-  height:50px;
+  height:30px;
   background-color: #bbb;
-  line-height: 50px;
+  line-height: 30px;
   font-size: 20px;
   color:#fff;
   padding-left: 8px;

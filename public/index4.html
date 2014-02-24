@@ -13,10 +13,6 @@
 </head>
 
 <body>    
-    <div class="header">
-        GUT持续集成看板
-    </div>
-    
     <div class="content">
         <div class="main-block product ">
             <div class="jobs-group product">
@@ -41,7 +37,8 @@
 
         function get_jobs_dom(jobs){
             ret = "";
-            $.each(jobs.slice(0,6),function(index,job){
+
+            $.each(jobs,function(index,job){
                 var class_job = 'doing';
                 b = job.lastBuild;
                 if(!b.building){
@@ -80,9 +77,11 @@
             $("#jobs_product").append(get_jobs_dom(project.jobs));
 
             $.each(sub_projects,function(index,sub_project){
-                var div_sub_project = $('<div class="row-of-sub-object clearfix"><div class="arrow front"><span class="glyphicon glyphicon-chevron-left"></span></div><div class="jobs-group sub-project"><div class="group-header">'+sub_project.name.substring(0,8)+'</div><div class="group-content" id=jobs_'+index+'></div></div></div>');
+                var jobs_group="jobs-group sub-project two-column";
+
+                var div_sub_project = $('<div class="row-of-sub-object clearfix"><div class="arrow front"><span class="glyphicon glyphicon-chevron-left"></span></div><div class="'+jobs_group+'"><div class="group-header">'+sub_project.name.substring(0,8)+'</div><div class="group-content"></div></div></div>');
                 $("#box_sub_project").append(div_sub_project);
-                $("#jobs_"+index).append(get_jobs_dom(sub_project.jobs));
+                $(".group-content",div_sub_project).append(get_jobs_dom(sub_project.jobs));
                 sub_project.box_modules = $('<div class="row-of-sub-object"></div>');
                 sub_project.box_modules.append($('<div class="arrow front"><span class="glyphicon glyphicon-chevron-left"></span></div>'));
                 $("#box_module").append(sub_project.box_modules);
@@ -91,10 +90,14 @@
 
             $.each(sub_projects,function(index,sub_project){
                 $.each(sub_project.ci_modules,function(i,ci_module){
+                    var box = $('<div class="jobs-group module"></div>');
+                    if(ci_module.jobs.length > 4){
+                        box = $('<div class="jobs-group module two-column"></div>');
+                    }
                     var header = $('<div class="group-header">'+ci_module.name+'</div>');
                     var content = $('<div class="group-content"></div>');
                     content.append(get_jobs_dom(ci_module.jobs));
-                    var box = $('<div class="jobs-group module"></div>');
+                    
                     box.append(header);
                     box.append(content);
                     sub_project.box_modules.append(box);
