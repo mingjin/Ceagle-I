@@ -28,6 +28,6 @@ function test_find(){
 	MongooseUtil.findByDate(date_start,print)
 	// MongooseUtil.findBetweenDate(date_start,date_end,print);
 }
-//MongooseUtil.deleteAll();
+MongooseUtil.deleteAll();
 //test_insert();
-test_find();
+//test_find();
