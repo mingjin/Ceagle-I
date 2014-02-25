@@ -1,25 +1,25 @@
 var mongoose = require("mongoose");
-
+mongoose.connect('mongodb://127.0.0.1/database');
 var schema_jobStatus = mongoose.Schema({
     lastTime: Date,
     pipeline: String
 });
 //这里我们采用大写类名的方式
 var JobStatus = mongoose.model('jobStatus', schema_jobStatus);
-var db = null;
+
 
 function connect(){
-	mongoose.connect('mongodb://127.0.0.1/database');
-	db = mongoose.connection;
+	var db = mongoose.connection;
 	db.on('error', console.error.bind(console, 'connection error:'));
+	return db;
 }
 
-function close(){
+function close(db){
 	db.close();
 }
 
 function findByDate(date_start,date_end, callback){
-	connect();	
+	var db = connect();
 	console.log(date_start);
 	console.log(date_end);
 	date_end = new Date(+date_end+24*60*60*1000);
@@ -27,32 +27,33 @@ function findByDate(date_start,date_end, callback){
 		//.select('lastTime')
 		.exec(function(e,obj){
 			callback(e,obj);
-    		close();
+    		close(db);
     });
 }
 
 exports.createRecord = function (lastTime, pipeline,callback){
-	connect();
+	var db = connect();
     new JobStatus({
         lastTime: lastTime,
         pipeline: pipeline
-    }).save(function(e,obj){callback(e,obj);
-    	close();
+    }).save(function(e,obj){
+    	if(callback)callback(e,obj);
+    	close(db);
     });
 }
 
 exports.deleteAll = function(callback){
-	connect();	
+	var db = connect();
 	JobStatus.remove(function(e,obj){
-		callback(e,obj);
-    	close();
+		if(callback)callback(e,obj);
+    	close(db);
     });
 } 
 
 exports.findAll = function (callback) {
-	connect();	
+	var db = connect();
 	JobStatus.find().exec(function(e,obj){callback(e,obj);
-    	close();
+    	close(db);
     });
 }
 

@@ -77,7 +77,9 @@
             $("#jobs_product").append(get_jobs_dom(project.jobs));
 
             $.each(sub_projects,function(index,sub_project){
-                var jobs_group="jobs-group sub-project two-column";
+                var jobs_group="jobs-group sub-project ";
+                if(sub_project.jobs.length > 5)
+                    jobs_group = jobs_group + "two-column"; 
 
                 var div_sub_project = $('<div class="row-of-sub-object clearfix"><div class="arrow front"><span class="glyphicon glyphicon-chevron-left"></span></div><div class="'+jobs_group+'"><div class="group-header">'+sub_project.name.substring(0,8)+'</div><div class="group-content"></div></div></div>');
                 $("#box_sub_project").append(div_sub_project);
@@ -91,7 +93,7 @@
             $.each(sub_projects,function(index,sub_project){
                 $.each(sub_project.ci_modules,function(i,ci_module){
                     var box = $('<div class="jobs-group module"></div>');
-                    if(ci_module.jobs.length > 4){
+                    if(ci_module.jobs.length > 5){
                         box = $('<div class="jobs-group module two-column"></div>');
                     }
                     var header = $('<div class="group-header">'+ci_module.name+'</div>');
