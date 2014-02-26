@@ -8,6 +8,15 @@ function updateUI(data)
     postMessage(data);
 }
 
+     function format_duration(duration){
+        ret = +duration / 1000;
+        var txt_hour = (ret / 3600).toFixed();
+        var txt_min = (ret % 3600) / 60;
+        ret = txt_min.toFixed()+'分';
+        if(txt_hour > 0)ret = txt_hour + '小时' + ret;
+        return ret;
+      }
+      
 var data = {"GUT产品网管持续集成":
                 {
                 "jobs":[{"name":"GUT_AUTO_CLEAN_SERVER","buildable":true,"healthReport":[{"score":100}],"lastBuild":{"building":false,"duration":625,"number":73,"result":"SUCCESS","url":"http://10.62.57.220:8080/job/GUT_AUTO_CLEAN_SERVER/73/"}},{"name":"GUT_AUTO_DEPLOY_CLIENT_32","buildable":true,"healthReport":[{"score":20}],"lastBuild":{"building":false,"duration":1031609,"number":91,"result":"SUCCESS","url":"http://10.62.57.220:8080/job/GUT_AUTO_DEPLOY_CLIENT_32/91/"}},{"name":"GUT_AUTO_DEPLOY_SERVER_125","buildable":true,"healthReport":[{"score":40}],"lastBuild":{"building":false,"duration":17732922,"number":53,"result":"SUCCESS","url":"http://10.62.57.220:8080/job/GUT_AUTO_DEPLOY_SERVER_125/53/"}},{"name":"GUT_AUTO_DEPLOY_SERVER_60.1","buildable":true,"healthReport":[{"score":40}],"lastBuild":{"building":false,"duration":17185234,"number":100,"result":"SUCCESS","url":"http://10.62.57.220:8080/job/GUT_AUTO_DEPLOY_SERVER_60.1/100/"}},{"name":"AutoTest_EMS_Log_CreateOMMagent_32","buildable":true,"healthReport":[{"score":100}],"lastBuild":{"building":false,"duration":469,"number":74,"result":"SUCCESS","url":"http://10.62.57.220:8080/job/AutoTest_EMS_Log_CreateOMMagent_32/74/"}},{"name":"AutoTest_EMS_GUT_smoketest_32","buildable":true,"healthReport":[{"score":100}],"lastBuild":{"building":false,"duration":453,"number":77,"result":"SUCCESS","url":"http://10.62.57.220:8080/job/AutoTest_EMS_GUT_smoketest_32/77/"}}],

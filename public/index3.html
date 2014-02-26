@@ -269,8 +269,8 @@
 
 
         var txt_stage_arrow = '<div class="stage-arrow"><span class="glyphicon glyphicon-chevron-right"></span></div>';
-        var txt_modules_stage = '<div class="stage modules-stage"><div class="stage-head success"><p class="stage-title">集成</p><p class="stage-time">00:15 - 00:16<br>耗时1分钟</p></div><div class="stage-body"></div></div>';
-        var txt_test_stage = '<div class="stage test-stage"><div class="stage-head success"><p class="stage-title">测试</p><p class="stage-time">00:15 - 00:16<br>耗时1分钟</p></div><div class="stage-body"></div></div>';
+        var txt_modules_stage = '<div class="stage modules-stage"><div class="stage-head success"><p class="stage-title">集成</p><p class="stage-time"></p></div><div class="stage-body"></div></div>';
+        var txt_test_stage = '<div class="stage test-stage"><div class="stage-head success"><p class="stage-title">测试</p><p class="stage-time"></p></div><div class="stage-body"></div></div>';
         var txt_distribute_stage = '<div class="stage distribute-stage"><div class="stage-head success"><p class="stage-title">集成测试</p><p class="stage-time">00:15 - 00:16<br>耗时1分钟</p></div><div class="stage-body"><div class="job clearfix"><div class="status success"><p class="number">#87</p></div><div class="job-content"><div class="job-title">部署</div><div class="job-time">328</div></div></div></div></div>';
         $("#box-subprojects").empty();
         var txt_section_subproject = '<section class="sub-project"><h2 class="sub-header" id="sub-project-name"></h2><div class="pipeline"><div class="pipeline-header fail" id="sub-project-status"><div style="float: left" id="head_bar"></div><div style="float: right;">测试用例117个，95%通过</div><div style="clear:both"></div></div><div class="pipeline-details"></div></div></section>';
@@ -283,14 +283,13 @@
         $("#sub-project-name",section_subproject).html(project.name);
         $(".pipeline-details",section_subproject).append(get_jobs_dom(project.jobs));
         //$("#head_bar",section_subproject).append($('<span class="section-number">1</span>'));
-        console.log(project.jobs[0].lastBuild);
         start_time = new Date(project.jobs[0].lastBuild.timestamp);
 
-        $("#head_bar",section_subproject).html('开始于:'+moment(start_time).format('HH:mm')+'， 耗时:'+sum_jobs_duration(project.jobs));
-        
-
+        $("#head_bar",section_subproject).html('开始于:'+moment(start_time).format('HH:mm')+'， 耗时:'+format_duration(sum_jobs_duration(project.jobs)));
         //子项目
         project.sub_projects.forEach(function(obj,index){
+          var start_time = 0;
+          var duration = 0;
           var section_subproject=$(txt_section_subproject);
           $("#box-subprojects").append(section_subproject);
           $("#sub-project-name",section_subproject).html(obj.name);
@@ -299,21 +298,36 @@
           var distribute_stage = $(txt_distribute_stage);
           //$('.section-number',section_subproject).html(i);
           $(".pipeline-details",section_subproject).append(modules_stage);
+          start_time = 0;
           obj.ci_modules.forEach(function(ci_module){
             var box_module = $(txt_module);
             modules_stage.append(box_module);
             $(".module-head",box_module).html(ci_module.name);
             $(".module-body",box_module).append(get_module_jobs_dom(ci_module.jobs));
             $(".module-body",box_module).append($('<div style="clear:both"></div>'));
+            if(start_time == 0 && ci_module.jobs[0].lastBuild)start_time = ci_module.jobs[0].lastBuild.timestamp;
+            duration += sum_jobs_duration(ci_module.jobs);
           });
+          start_time = moment(start_time).format('HH:mm')+" - " + moment(start_time+duration).format('HH:mm') + "<br>耗时:"+format_duration(duration); 
+          $(".stage-time",modules_stage).html(start_time);
+
+
           //$(".stage-body",modules_stage).append(get_subpro_jobs_dom(obj.jobs));
           $(".pipeline-details",section_subproject).append($(txt_stage_arrow));
           $(".pipeline-details",section_subproject).append(test_stage);
+          var test_start_time = obj.jobs[0].lastBuild.timestamp;
+          var test_duration = sum_jobs_duration(obj.jobs);
+          var txt_test_stage_bar = moment(test_start_time).format('HH:mm')+" - " + moment(test_start_time+duration).format('HH:mm') + "<br>耗时:"+format_duration(test_duration);
+          $(".stage-time",test_stage).html(txt_test_stage_bar);
+          
           $(".stage-body",test_stage).append(get_subpro_jobs_dom(obj.jobs));
           $(".pipeline-details",section_subproject).append($(txt_stage_arrow));
           $(".pipeline-details",section_subproject).append(distribute_stage);
           $(".pipeline-details",section_subproject).append($('<div style="clear: both"></div>'));
+
+          $("#head_bar",section_subproject).html('开始于:'+moment(test_start_time).format('HH:mm')+'， 耗时:'+format_duration(test_duration));
         });
+
         //$('#subproject-jobs').empty();
         //$('#subproject-jobs').append(get_subpro_jobs_dom(project.sub_projects[0].jobs));
       }
@@ -330,22 +344,19 @@
 
       function sum_jobs_duration(jobs){
         var ret = 0;
+        var start_job = 0;
+        var end_job = 0;
         for(var i = 0 ; i< jobs.length; i++){
           if(jobs[i].lastBuild){
-            ret = +jobs[i].lastBuild.duration + ret;
+            if(start_job == 0 && jobs[i].lastBuild.timestamp)start_job = jobs[i].lastBuild.timestamp;
+            end_job = +jobs[i].lastBuild.timestamp + jobs[i].lastBuild.duration;             
           }
         }
-        return format_duration(ret);
-      }
-
-      function format_duration(duration){
-        ret = +duration / 1000;
-        var txt_hour = ret / 3600;
-        var txt_min = (ret % 3600) / 60;
-        ret = txt_min.toFixed()+'分';
-        if(txt_hour > 0)ret = txt_hour.toFixed() + '小时' + ret;
+        ret = end_job - start_job;
         return ret;
       }
+
+ 
       function get_jobs_dom(jobs){
             ret = "";
             for(var i = 0 ; i< jobs.length; i++){
@@ -354,7 +365,11 @@
                 if(!job.lastBuild){
                   ret = ret + '<div class="stage"><div class="stage-head '+class_job+'">#'+job.name+'</div><div class="stage-body"><br/></div></div>';
                 }else{
-                ret = ret + '<div class="stage"><div class="stage-head '+class_job+'">#'+job.lastBuild.number+job.name+'</div><div class="stage-body">'+'job.start-end'+'<br/>耗时'+job.lastBuild.duration+'</div></div>';
+                  var job_start_end = "";
+                  if(job.lastBuild.timestamp){
+                    job_start_end = moment(new Date(job.lastBuild.timestamp)).format('HH:mm') + " - " + moment(new Date(job.lastBuild.timestamp+job.lastBuild.duration)).format('HH:mm');
+                  }
+                  ret = ret + '<div class="stage"><div class="stage-head '+class_job+'">#'+job.lastBuild.number+job.name+'</div><div class="stage-body">'+job_start_end+'<br/>耗时'+format_duration(job.lastBuild.duration)+'</div></div>';
                 }
                 if(i<jobs.length - 1){
                   ret = ret + '<div class="stage-arrow"><span class="glyphicon glyphicon-chevron-right"></span></div>';
@@ -369,7 +384,7 @@
       function get_subpro_jobs_dom(jobs){
         ret = "";
         jobs.forEach(function(job,index){
-          ret = ret + '<div class="job clearfix"><div class="status '+get_job_class(job)+'"><p class="number">#'+job.lastBuild.number+'</p></div><div class="job-content"><div class="job-title">'+job.name.substring(0,8)+'</div><div class="job-time">'+job.lastBuild.duration+'</div></div></div>';
+          ret = ret + '<div class="job clearfix"><div class="status '+get_job_class(job)+'"><p class="number">#'+job.lastBuild.number+'</p></div><div class="job-content"><div class="job-title">'+job.name.substring(0,8)+'</div><div class="job-time"> 开始于:'+moment(new Date(job.lastBuild.timestamp)).format('DD日HH:mm')  + "-" + format_duration(job.lastBuild.duration)+'</div></div></div>';
         });
         return ret;                  
       }
