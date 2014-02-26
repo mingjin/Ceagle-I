@@ -40,7 +40,8 @@ exports.createRecord = function (lastTime, pipeline,callback){
     new JobStatus({
         lastTime: lastTime,
         pipeline: pipeline
-    }).save(function(e,obj){callback(e,obj);
+    }).save(function(e,obj){
+    	if(callback)callback(e,obj);
     	close();
     });
 }
